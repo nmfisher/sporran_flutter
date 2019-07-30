@@ -10,10 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  sporran:
-    path: C:\\Users\\nickh\\Documents\\Projects\\sporran
   sqflite: ^1.1.6+3
   connectivity: ^0.4.3+6
+  json_object_lite: ^2.0.0
+  sporran:
+    path: C:\\Users\\nickh\\Documents\\Projects\\sporran
 
 dev_dependencies:
   flutter_test:

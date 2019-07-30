@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/services.dart';
-import 'package:sporran/sporran.dart';
+import 'package:sporran/sporran_io.dart';
 import 'package:sporran_flutter/sqflite_store.dart';
 
 class SporranFlutter {
@@ -19,7 +19,7 @@ class SporranFlutter {
     var online = Connectivity().onConnectivityChanged.map((x) => x != ConnectivityResult.none);
     initialiser.store = store;
     // Create the client
-    final Sporran sporran = new Sporran(initialiser, online);
+    final Sporran sporran = getSporran(initialiser, online);
     sporran.autoSync = false;
     await sporran.onReady.first;
   }

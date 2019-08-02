@@ -22,9 +22,9 @@ class SqfliteStore extends Store {
 
   @override
   Stream<String> all() async* {
-    var documents = await db.query("data");
+    var documents = await db.query(_table);
     for(var doc in documents ) {
-      yield doc["document"];
+      yield doc[_document];
     }
   }
 
@@ -35,7 +35,7 @@ class SqfliteStore extends Store {
 
   @override
   Future<bool> exists(String key) async {
-    var documents = await db.query(_table, columns:[_key], where: 'key = ?', whereArgs: [key]);
+    var documents = await db.query(_table, columns:[_key], where: '$_key = ?', whereArgs: [key]);
     return documents.length > 0;
   }
 
@@ -52,10 +52,15 @@ class SqfliteStore extends Store {
       return;
 
     var params = List.filled(keys.length, "?").join(",");
-    var results = await db.query(_table, columns:[_document], where: '$_key in ($params)', whereArgs: keys.toList());
-    for (var result in results) {
-      print(result);
-      yield result[_document];
+    
+    // fetch the rows from the database
+    var results = await db.query(_table, columns:[_key, _document], where: '$_key in ($params)', whereArgs: keys.toList());
+    
+    // convert to map indexed on key
+    var lookup = Map.fromEntries(results.map((x) => MapEntry<String,String>(x[_key], x[_document])));
+    print("lookup : $lookup");
+    for (var key in keys) { 
+      yield lookup[key];
     }
   }
 
@@ -87,7 +92,10 @@ class SqfliteStore extends Store {
 
   @override
   Future<String> save(String obj, String key) async {
-    await db.insert(_table, {_key:key, _document:obj});
+    await db.transaction((txn) async {
+      await txn.execute("INSERT OR IGNORE INTO $_table ($_key, $_document) VALUES (?,?)", [key, obj]);
+      await txn.update(_table, {_document:obj}, where:"$_key = ?", whereArgs:[key]);
+    });
     return key;
   }
 }

@@ -19,7 +19,7 @@ class SporranFlutter {
     var online = Connectivity().onConnectivityChanged.map((x) => x != ConnectivityResult.none);
     initialiser.store = store;
     // Create the client
-    final Sporran sporran = getSporran(initialiser, online);
+    final Sporran sporran = await getSporran(initialiser, online);
     sporran.autoSync = false;
     await sporran.onReady.first;
   }

@@ -1,6 +1,6 @@
 name: sporran_flutter
 description: A Flutter plugin/wrapper for the Sporran CouchDB client.
-version: 0.0.1
+version: 0.0.2
 author: Nick Fisher
 homepage: www.avinium.com
 

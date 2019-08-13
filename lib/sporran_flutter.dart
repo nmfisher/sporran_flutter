@@ -6,21 +6,34 @@ import 'package:sporran/sporran_io.dart';
 import 'package:sporran_flutter/sqflite_store.dart';
 
 class SporranFlutter {
-  static const MethodChannel _channel =
-      const MethodChannel('sporran_flutter');
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
+  final String host;
+  final String port;
+  final String username;
+  final String password;
+  final String databaseName;
+
+  Sporran sporran;
+  SporranInitialiser initialiser;
+  
+  SporranFlutter(this.host, this.port, this.username, this.password, this.databaseName) {
+    initialiser = new SporranInitialiser();
+    initialiser.dbName = databaseName;
+    initialiser.hostname = host;
+    initialiser.manualNotificationControl = true;
+    initialiser.port = port;
+    initialiser.scheme = "http://";
+    initialiser.username = username;
+    initialiser.password = password;
+    initialiser.preserveLocal = true;
   }
-
-  static void initialize(SporranInitialiser initialiser) async {
+  
+  void initialize() async {
     final SqfliteStore store = await SqfliteStore.open("${initialiser.dbName}.db");
     var online = Connectivity().onConnectivityChanged.map((x) => x != ConnectivityResult.none);
     initialiser.store = store;
-    // Create the client
-    final Sporran sporran = await getSporran(initialiser, online);
+    sporran = await getSporran(initialiser, online);
     sporran.autoSync = false;
-    await sporran.onReady.first;
   }
+
 }

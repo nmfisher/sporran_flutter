@@ -14,10 +14,10 @@ dependencies:
   connectivity: ^0.4.3+6
   json_object_lite: ^2.0.0
   sporran:
-    # git: 
-      # url: https://github.com/nmfisher/sporran
-      # ref: 459cf297b78cbc9f1615caac8e65df3cc636a6ad
-    path: C:\\Users\\nickh\\Documents\\Projects\\sporran
+    git: 
+      url: https://github.com/nmfisher/sporran
+      ref: 9bbcfe592f1a8a11a4e62811e23796c69d3b8529
+    # path: C:\\Users\\nickh\\Documents\\Projects\\sporran
   wilt:
     git: 
       url: https://github.com/nmfisher/wilt

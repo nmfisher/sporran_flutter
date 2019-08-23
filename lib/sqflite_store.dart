@@ -58,7 +58,6 @@ class SqfliteStore extends Store {
     
     // convert to map indexed on key
     var lookup = Map.fromEntries(results.map((x) => MapEntry<String,String>(x[_key], x[_document])));
-    print("lookup : $lookup");
     for (var key in keys) { 
       yield lookup[key];
     }

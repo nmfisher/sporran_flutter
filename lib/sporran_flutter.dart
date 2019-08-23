@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:connectivity/connectivity.dart';
-import 'package:flutter/services.dart';
 import 'package:sporran/sporran_io.dart';
 import 'package:sporran/lawndart.dart';
 import 'package:sporran_flutter/sqflite_store.dart';
@@ -13,12 +11,13 @@ class SporranFlutter {
   final String username;
   final String password;
   final String databaseName;
+  final bool autoSync;
   Stream<bool> connectivity;
 
   Sporran sporran;
   SporranInitialiser initialiser;
   
-  SporranFlutter(this.host, this.port, this.username, this.password, this.databaseName, this.connectivity, [ Store store ]) {
+  SporranFlutter(this.host, this.port, this.username, this.password, this.databaseName, this.connectivity, { Store store, this.autoSync }) {
     initialiser = new SporranInitialiser();
     initialiser.dbName = databaseName;
     initialiser.hostname = host;
@@ -33,14 +32,14 @@ class SporranFlutter {
   
   void initialize() async {
     if(initialiser.store == null) {
-      initialiser.store = await SqfliteStore.open("${initialiser.dbName}.db");
+      initialiser.store = await SqfliteStore.open("${initialiser.dbName}.sql");
     }
 
     if(connectivity == null) 
       connectivity = Connectivity().onConnectivityChanged.map((x) => x != ConnectivityResult.none);
     
     sporran = await getSporran(initialiser, connectivity);
-    sporran.autoSync = false;
+    sporran.autoSync = autoSync;
   }
 
 }

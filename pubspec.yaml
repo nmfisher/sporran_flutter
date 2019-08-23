@@ -16,7 +16,7 @@ dependencies:
   sporran:
     git: 
       url: https://github.com/nmfisher/sporran
-      ref: 856157e758d36642a2d776bfdbdf382e88b51bbe
+      ref: 9267289129ddc837da648515416d939ad0c448e5
     # path: C:\\Users\\nickh\\Documents\\Projects\\sporran
   wilt:
     git: 

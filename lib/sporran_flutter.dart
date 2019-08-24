@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:connectivity/connectivity.dart';
 import 'package:sporran/sporran_io.dart';
 import 'package:sporran/lawndart.dart';
@@ -34,7 +35,14 @@ class SporranFlutter {
 
   void initialize() async {
     if (initialiser.store == null) {
-      initialiser.store = await SqfliteStore.open("${initialiser.dbName}.sql");
+      var filename = "${initialiser.dbName}.sql";
+      if(await File(filename).exists()) {
+        print("Opening existing database file at $filename");
+      } else {
+        print("Creating new database file at $filename");
+      }
+      
+      initialiser.store = await SqfliteStore.open(filename);
     }
 
     if (connectivity == null)

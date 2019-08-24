@@ -14,8 +14,13 @@ class SqfliteStore extends Store {
   SqfliteStore._(this.db);
 
   static Future<SqfliteStore> open(String dbName) async {
+    print("Creating SqfliteStore with file $dbName");
     var db = await openDatabase(dbName);
+    
     db.execute(_createDb); 
+    var res = await db.query(_table);
+    print("QUERYING");
+    print(res);
     final store = new SqfliteStore._(db);
     return store;
   }

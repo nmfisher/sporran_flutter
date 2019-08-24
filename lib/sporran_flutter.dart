@@ -36,12 +36,6 @@ class SporranFlutter {
   void initialize() async {
     if (initialiser.store == null) {
       var filename = "${initialiser.dbName}.sql";
-      if(await File(filename).exists()) {
-        print("Opening existing database file at $filename");
-      } else {
-        print("Creating new database file at $filename");
-      }
-      
       initialiser.store = await SqfliteStore.open(filename);
     }
 

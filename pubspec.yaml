@@ -1,6 +1,6 @@
 name: sporran_flutter
 description: A Flutter plugin/wrapper for the Sporran CouchDB client.
-version: 0.0.4
+version: 0.0.5
 author: Nick Fisher
 homepage: www.avinium.com
 
@@ -16,7 +16,7 @@ dependencies:
   sporran:
     git: 
       url: https://github.com/nmfisher/sporran
-      ref: 98b41f4304e96fe92755d13e37209c82f59bb816
+      ref: c333d1f06e197a879097d173352fa51b232cd537
     # path: C:\\Users\\nickh\\Documents\\Projects\\sporran
   wilt:
     git: 
